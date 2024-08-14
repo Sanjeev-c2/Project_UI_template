@@ -1,61 +1,101 @@
-import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import React from 'react';
+import { useNavigate } from 'react-router-dom';
 import ManageAccountsIcon from '@mui/icons-material/ManageAccounts';
 import '../Styles/Navbar.css';
 
-const Navbar = () => {
-    const [activeDropdown, setActiveDropdown] = useState(null);
+import Container from 'react-bootstrap/Container';
+import Nav from 'react-bootstrap/Nav';
+import Navbar from 'react-bootstrap/Navbar';
+import NavDropdown from 'react-bootstrap/NavDropdown';
 
-    const links = [
-        { title: 'Link 1', sublinks: ['Sublink 1-1', 'Sublink 1-2', 'Sublink 1-3', 'Sublink 1-4'] },
-        { title: 'Link 2', sublinks: ['Sublink 2-1', 'Sublink 2-2', 'Sublink 2-3', 'Sublink 2-4'] },
-        { title: 'Link 3', sublinks: ['Sublink 3-1', 'Sublink 3-2', 'Sublink 3-3', 'Sublink 3-4'] },
-        { title: 'Link 4', sublinks: ['Sublink 4-1', 'Sublink 4-2', 'Sublink 4-3', 'Sublink 4-4'] },
-        { title: 'Link 5', sublinks: ['Sublink 5-1', 'Sublink 5-2', 'Sublink 5-3', 'Sublink 5-4'] },
-        { title: 'Link 6', sublinks: ['Sublink 6-1', 'Sublink 6-2', 'Sublink 6-3', 'Sublink 6-4'] },
-        { title: 'Link 7', sublinks: ['Sublink 7-1', 'Sublink 7-2', 'Sublink 7-3', 'Sublink 7-4'] },
-    ];
+const Navbar1 = () => {
+    const data = JSON.parse(localStorage.getItem("userDetails"));
+    
+    const navigate = useNavigate();
 
-    const handleMouseEnter = (index) => {
-        setActiveDropdown(index);
-    };
-
-    const handleMouseLeave = () => {
-        setActiveDropdown(null);
-    };
+    function handleLogout() {
+        navigate("/");
+    }
 
     return (
-        <div className="navbar">
-            <div className="menu">
-                <h3>Code<span style={{ color: 'red' }}>n</span>trix</h3>
-            </div>
-            <div className="links">
-                {links.map((link, index) => (
-                    <div 
-                        key={index} 
-                        className="nav-item" 
-                        onMouseEnter={() => handleMouseEnter(index)} 
-                        onMouseLeave={handleMouseLeave}
+        <Navbar variant="dark" expand="lg" className="navbar">
+            <Container fluid className="container">
+                <Navbar.Brand className="logo">
+                    <h4>Code<span style={{ color: 'red' }}>n</span>trix</h4>
+                </Navbar.Brand>
+                <Navbar.Toggle aria-controls="navbar-dark-example" />
+                <Navbar.Collapse id="navbar-dark-example">
+                    <Nav className="mx-auto">
+                        <NavDropdown title="Title1" id="nav-dropdown-dark-example">
+                            <NavDropdown.Item href="#action/3.1">Action</NavDropdown.Item>
+                            <NavDropdown.Item href="#action/3.2">Another action</NavDropdown.Item>
+                            <NavDropdown.Item href="#action/3.3">Something</NavDropdown.Item>
+                            <NavDropdown.Divider />
+                            <NavDropdown.Item href="#action/3.4">Separated link</NavDropdown.Item>
+                        </NavDropdown>
+                        <NavDropdown title="Title2" id="nav-dropdown-dark-example">
+                            <NavDropdown.Item href="#action/3.1">Action</NavDropdown.Item>
+                            <NavDropdown.Item href="#action/3.2">Another action</NavDropdown.Item>
+                            <NavDropdown.Item href="#action/3.3">Something</NavDropdown.Item>
+                            <NavDropdown.Divider />
+                            <NavDropdown.Item href="#action/3.4">Separated link</NavDropdown.Item>
+                        </NavDropdown>
+                        <NavDropdown title="Title3" id="nav-dropdown-dark-example" >
+                            <NavDropdown.Item href="#action/3.1">Action</NavDropdown.Item>
+                            <NavDropdown.Item href="#action/3.2">Another action</NavDropdown.Item>
+                            <NavDropdown.Item href="#action/3.3">Something</NavDropdown.Item>
+                            <NavDropdown.Divider />
+                            <NavDropdown.Item href="#action/3.4">Separated link</NavDropdown.Item>
+                        </NavDropdown>
+                        <NavDropdown title="Title4" id="nav-dropdown-dark-example" >
+                            <NavDropdown.Item href="#action/3.1">Action</NavDropdown.Item>
+                            <NavDropdown.Item href="#action/3.2">Another action</NavDropdown.Item>
+                            <NavDropdown.Item href="#action/3.3">Something</NavDropdown.Item>
+                            <NavDropdown.Divider />
+                            <NavDropdown.Item href="#action/3.4">Separated link</NavDropdown.Item>
+                        </NavDropdown>
+                        <NavDropdown title="Title5" id="nav-dropdown-dark-example" >
+                            <NavDropdown.Item href="#action/3.1">Action</NavDropdown.Item>
+                            <NavDropdown.Item href="#action/3.2">Another action</NavDropdown.Item>
+                            <NavDropdown.Item href="#action/3.3">Something</NavDropdown.Item>
+                            <NavDropdown.Divider />
+                            <NavDropdown.Item href="#action/3.4">Separated link</NavDropdown.Item>
+                        </NavDropdown>
+                        <NavDropdown title="Title6" id="nav-dropdown-dark-example" >
+                            <NavDropdown.Item href="#action/3.1">Action</NavDropdown.Item>
+                            <NavDropdown.Item href="#action/3.2">Another action</NavDropdown.Item>
+                            <NavDropdown.Item href="#action/3.3">Something</NavDropdown.Item>
+                            <NavDropdown.Divider />
+                            <NavDropdown.Item href="#action/3.4">Separated link</NavDropdown.Item>
+                        </NavDropdown>
+                        <NavDropdown title="Title7" id="nav-dropdown-dark-example" >
+                            <NavDropdown.Item href="#action/3.1">Action</NavDropdown.Item>
+                            <NavDropdown.Item href="#action/3.2">Another action</NavDropdown.Item>
+                            <NavDropdown.Item href="#action/3.3">Something</NavDropdown.Item>
+                            <NavDropdown.Divider />
+                            <NavDropdown.Item href="#action/3.4">Separated link</NavDropdown.Item>
+                        </NavDropdown>
+                    </Nav>
+                </Navbar.Collapse>
+                <div className="profile">
+                    <NavDropdown
+                        title={<ManageAccountsIcon className="custom-icon" />}
+                        id="profile-dropdown"
+                        align="end"
+                        className="custom-dropdown"
                     >
-                        <Link to="#">{link.title}</Link>
-                        {activeDropdown === index && (
-                            <div className="dropdown">
-                                <ul>
-                                    {link.sublinks.map((sublink, subindex) => (
-                                        <li key={subindex}><Link to="#">{sublink}</Link></li>
-                                    ))}
-                                </ul>
-                            </div>
-                        )}
-                    </div>
-                ))}
-            </div>
-            <div className="profile">
-                <div className='icon'><ManageAccountsIcon /></div>
-                {/* <div className='icon'><MenuIcon /></div> */}
-            </div>
-        </div>
+                        <NavDropdown.ItemText>
+                            <p>Username: {data.user.username}</p>
+                        </NavDropdown.ItemText>
+                        <NavDropdown.Divider />
+                        <NavDropdown.Item onClick={handleLogout}>
+                            Logout
+                        </NavDropdown.Item>
+                    </NavDropdown>
+                </div>
+            </Container>
+        </Navbar>
     );
 };
 
-export default Navbar;
+export default Navbar1;

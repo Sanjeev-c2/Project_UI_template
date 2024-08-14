@@ -1,71 +1,104 @@
+.navbar .nav-link,
+.navbar .navbar-brand,
+.navbar , .profile {
+    color: rgb(255, 255, 255) !important;
+    text-decoration: none;
+}
+
+.navbar .nav-link:hover,
+.navbar .navbar-brand:hover {
+    text-decoration: none;
+}
+
+.navbar .dropdown-item:hover {
+    color: white !important;
+    background-color: #0044cc; 
+}
 .navbar {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding:1rem 2rem;
-    color: white;
-    background-color: #00a2ff;
-}
-.menu{
-    cursor: pointer;
-}
-.links{
-    display: flex;
-    justify-content: space-between; 
-    align-items: center;
-    font-size: 1.02rem;
-}
-
-.nav-item {
     position: relative;
-    margin-right: 3rem;
-}
-.nav-item a{
-    color: white;
-    text-decoration: none;
-}
-
-.nav-item .dropdown {
-    display: none;
-    position: absolute;
-    top: 100%;
+    top: 0;
     left: 0;
-    background-color: white;
-    border: 1px solid #ccc;
-    width: max-content;
-    padding: 1rem;
-    z-index: 1000;
+    width: 100%;
+    z-index: 100; 
+    background-color: #0044cc;
 }
-
-.nav-item .dropdown ul {
-    list-style: none;
-    padding: 0;
-    margin: 0;
-}
-
-.nav-item .dropdown li {
-    padding: 0.5rem;
-}
-
-.nav-item .dropdown li a {
-    text-decoration: none;
-    color: black;
-}
-
-.nav-item .dropdown li:hover {
-    background-color: #f0f0f0;
-}
-
-.nav-item:hover .dropdown {
-    display: block;
-}
-
-.profile {
+.container {
+    color: white;
     display: flex;
     align-items: center;
-    cursor: pointer;
+    justify-content: space-between;
 }
 
-.icon {
-    margin-left: 1rem;
+.logo {
+    flex: 1;
+    text-align: left;
+    width: max-content;
+}
+.navbar .nav-link {
+    margin: 0 15px; 
+}
+
+.navbar .dropdown-item {
+    padding: 10px 20px; 
+    margin-bottom: 5px; 
+    text-decoration: none;
+}
+
+.navbar .dropdown-item:last-child {
+    margin-bottom: 0;
+}
+
+.nav-center {
+    flex: 2;
+    display: flex;
+    justify-content: center;
+}
+
+.custom-dropdown .dropdown-toggle::after {
+    display: none;
+}
+.custom-dropdown .dropdown-menu {
+    position: absolute;
+    margin: 10px 0 0 20px;
+    width: 200px; 
+}
+@media (max-width:900px) {
+    .navbar-collapse {
+        display: block; /* Show the collapsible section */
+    }
+
+    .navbar-toggler {
+        display: block; /* Show toggle button */
+    }
+
+    .navbar-nav {
+        display: flex;
+        flex-direction: row; /* Arrange dropdowns in a row */
+        flex-wrap: wrap; /* Allow wrapping if needed */
+        width: 100%; /* Full width */
+    }
+
+    .nav-center {
+        display: none; /* Hide center nav items on small screens */
+    }
+
+    .dropdown-menu {
+        display: block; /* Ensure dropdown menu is visible */
+        position: static; /* Reset positioning */
+        width: auto; /* Auto width */
+        padding: 0; /* Remove default padding */
+        margin: 0; /* Remove default margin */
+    }
+
+    .dropdown-item {
+        flex: 1; /* Allow items to grow and shrink as needed */
+        text-align: center; /* Center text in items */
+        margin: 0; /* Remove margin for row layout */
+    }
+    
+    .profile{
+        position: fixed;
+        right: 10px;
+        top: 20px;
+    }
 }

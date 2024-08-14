@@ -4,26 +4,26 @@ import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import './App.css';
 
 import 'bootstrap/dist/css/bootstrap.min.css';
-import Navbar from './Components/Navbar';
 import LoginPage from './Components/Loginpage';
 import CustomSidenav from './Components/CustomSideNav'
+import LandingPage from './Components/LandingPage';
 
 
 function App() {
-  const [expanded, setExpand] = React.useState(true);
-  const [activeKey, setActiveKey] = React.useState('1');
+  // const [expanded, setExpand] = React.useState(true);
+  // const [activeKey, setActiveKey] = React.useState('1');
   return (
     <div className="App">
       <BrowserRouter>
       <Routes>
-        {/* <Route path='/navbar' element={<Navbar/>}/> */}
+        <Route path='/landingpage/*' element={<LandingPage/>}/>
         <Route path='/' element={<LoginPage/>}/>
-        <Route path='/navbar' element={<CustomSidenav
+        {/* <Route path='/navbar' element={<CustomSidenav
         activeKey={activeKey}
         onSelect={setActiveKey}
         expanded={expanded}
         onExpand={setExpand}
-        appearance="inverse"/>}/>
+        appearance="inverse"/>}/> */}
       </Routes> 
       </BrowserRouter>
     </div>

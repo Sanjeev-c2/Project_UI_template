@@ -1,0 +1,22 @@
+.userpermissionform form{
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+    font-size: 18px;
+    padding: 10vh;
+}
+#btn button{
+    display: block;
+    margin-top: 20px;
+    font-size: 16px;
+    padding: 5px;
+    border-radius: 5px;
+    background-color: red;
+    color: white;
+}
+#checkbox label{
+    display: block;
+    align-items: center;
+    text-align: left;
+    margin: 20px;
+}

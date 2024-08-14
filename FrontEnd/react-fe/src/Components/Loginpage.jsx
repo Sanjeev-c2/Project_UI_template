@@ -60,7 +60,9 @@ const LoginPage = () => {
         .then((res)=>{
             console.log(res.data);
             alert("Logging Successful!!!")
-            navigate("/navbar")         
+            // localStorage.setItem("username", JSON.stringify(res.data.data.username));
+            localStorage.setItem("userDetails", JSON.stringify(res.data)); // Store user details
+            navigate("/landingpage")         
         })
         .catch((err)=>{
             console.log(err);
