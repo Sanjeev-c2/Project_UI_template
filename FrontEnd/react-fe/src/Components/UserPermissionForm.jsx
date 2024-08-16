@@ -33,7 +33,7 @@ const UserPermissionForm = () => {
     };
 
     const handleSubmit = async (e) => {
-        e.preventDefault();
+        // e.preventDefault();
         const data = {
             user,
             role,
@@ -53,52 +53,58 @@ const UserPermissionForm = () => {
         <div className="userpermissionform">
             <h3>User Permission Master</h3>
             <form onSubmit={handleSubmit}>
-                <div id="user-role">
-                    <label>
-                        Role:
-                        <input
-                            type="text"
-                            value={role}
-                            onChange={(e) => setRole(e.target.value)}
-                            required
-                        />
-                    </label>
-                </div>
+    <table>
+        <thead>
+            <tr>
+                <th>Role</th>
+                <th>Create</th>
+                <th>Read</th>
+                <th>Update</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>
+                    <input
+                        type="text"
+                        value={role}
+                        onChange={(e) => setRole(e.target.value)}
+                        required
+                    />
+                </td>
+                <td>
+                    <input
+                        type="checkbox"
+                        name="can_create"
+                        checked={permissions.can_create}
+                        onChange={handleCheckboxChange}
+                    />
+                </td>
+                <td>
+                    <input
+                        type="checkbox"
+                        name="can_read"
+                        checked={permissions.can_read}
+                        onChange={handleCheckboxChange}
+                    />
+                </td>
+                <td>
+                    <input
+                        type="checkbox"
+                        name="can_update"
+                        checked={permissions.can_update}
+                        onChange={handleCheckboxChange}
+                    />
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    
+    <div id="btn">
+        <button type="submit">Save Permissions</button>
+    </div>
+</form>
 
-                <div id='checkbox'>
-                    <label>
-                        Create
-                        <input
-                            type="checkbox"
-                            name="can_create"
-                            checked={permissions.can_create}
-                            onChange={handleCheckboxChange}
-                        />
-                    </label>
-                    <label>
-                        Read
-                        <input
-                            type="checkbox"
-                            name="can_read"
-                            checked={permissions.can_read}
-                            onChange={handleCheckboxChange}
-                        />
-                    </label>
-                    <label>
-                        Update
-                        <input
-                            type="checkbox"
-                            name="can_update"
-                            checked={permissions.can_update}
-                            onChange={handleCheckboxChange}
-                        />
-                    </label>
-                </div>
-
-                <div id="btn">
-                    <button type="submit">Save Permissions</button>
-                </div>
-            </form>
         </div>
     );
 };

@@ -17,3 +17,13 @@ class UserPermission(models.Model):
     
     def __str__(self):
         return f"{self.user.username} - {self.role}"
+    
+
+class SampleForm(models.Model):
+    name = models.CharField(max_length=100)
+    email = models.EmailField(max_length=200)
+    date = models.DateField()
+    age = models.IntegerField(max_length=4)
+
+    def ___str___(self):
+        return self.name

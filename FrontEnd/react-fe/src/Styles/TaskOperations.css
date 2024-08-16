@@ -1,0 +1,77 @@
+/* General container styling */
+.task-operations {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px;
+    background-color: #ffffff;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.251);
+    font-family: 'Arial', sans-serif;
+    margin-top: 50px;
+}
+
+/* Header styling */
+.task-operations h3 {
+    text-align: center;
+    color: #333;
+    margin-bottom: 20px;
+}
+
+/* Role selection dropdown styling */
+.task-operations label {
+    display: block;
+    font-weight: bold;
+    margin-bottom: 10px;
+    color: #333;
+}
+
+.task-operations select {
+    width: 50%;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    font-size: 16px;
+    box-sizing: border-box;
+    outline: none;
+    transition: border-color 0.3s;
+}
+
+.task-operations select:focus {
+    border-color: #007bff;
+}
+
+/* Buttons styling */
+.task-operations .operations {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    justify-content: center;
+    margin-top: 20px;
+}
+
+.task-operations button {
+    background-color: #007bff;
+    color: #ffffff;
+    border: none;
+    border-radius: 5px;
+    padding: 10px 20px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s, transform 0.2s;
+    text-align: center;
+}
+
+.task-operations button:hover {
+    background-color: #0056b3;
+    transform: translateY(-2px);
+}
+
+.task-operations button:active {
+    background-color: #004494;
+    transform: translateY(0);
+}
+
+.task-operations button a {
+    color: #ffffff;
+    text-decoration: none;
+}
