@@ -55,9 +55,10 @@
 }
 
 /* Checkbox styling */
-.userpermissionform td input[type="checkbox"] {
+.userpermissionform td input[type="checkbox"]{
     transform: scale(1.2);
     cursor: pointer;
+    accent-color: #007bff; 
 }
 
 /* Button styling */

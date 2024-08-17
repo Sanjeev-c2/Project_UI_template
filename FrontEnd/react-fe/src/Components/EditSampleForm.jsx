@@ -1,66 +1,94 @@
-import axios from "axios"
-import { useEffect, useState } from "react"
-import { useParams } from "react-router-dom"
+import axios from "axios";
+import { useEffect, useState } from "react";
+import { useParams } from "react-router-dom";
+import '../Styles/EditSampleForm.css'; // Import the CSS file
 
 const EditSampleForm = () => {
-    let [name,setName] = useState("")
-   let [email,setEmail] = useState("")
-   let [date,setDate] = useState("")
-   let [age,setAge] = useState("")
+    const [name, setName] = useState("");
+    const [email, setEmail] = useState("");
+    const [date, setDate] = useState("");
+    const [age, setAge] = useState("");
 
-   let param = useParams('')
+    const { id } = useParams();
 
-    useEffect(()=>{
-        axios.get(`http://localhost:8000/api/sample-forms/detail/${param.id}/`)
-        .then((res)=>{
-            setName(res.data.name)
-            setEmail(res.data.email)
-            setDate(res.data.date)
-            setAge(res.data.age)
-            console.log(res.data);
-        })
-        .catch((err)=>{
-            console.log(err);
-        })
-    },[])
+    useEffect(() => {
+        axios.get(`http://localhost:8000/api/sample-forms/detail/${id}/`)
+            .then((res) => {
+                setName(res.data.name);
+                setEmail(res.data.email);
+                setDate(res.data.date);
+                setAge(res.data.age);
+            })
+            .catch((err) => {
+                console.error(err);
+            });
+    }, [id]);
 
-   function edit_details(e){
+    const edit_details = (e) => {
         e.preventDefault();
-        let data = {name,email,date,age}
-        axios.put(`http://localhost:8000/api/sample-forms/update/${param.id}/`,data)
-        .then((res)=>{
-            console.log(res.data);
-            alert("Data has been Saved successfully!!!")
-        })
-        .catch((err)=>{
-            console.log(err);
-            alert("Couldn't saved!!!")
-        })
-   }
-    return ( 
-        <div className="editsampleform">
+        const data = { name, email, date, age };
+        axios.put(`http://localhost:8000/api/sample-forms/update/${id}/`, data)
+            .then((res) => {
+                alert("Data has been saved successfully!");
+            })
+            .catch((err) => {
+                console.error(err);
+                alert("Couldn't save data.");
+            });
+    };
+
+    return (
+        <div className="taskform">
             <h2>Update Form</h2>
-        <form onSubmit={edit_details}>
-            <label htmlFor="">Name: </label>
-            <input type="text" placeholder='Enter your name' 
-            value={name}
-            onChange={(e)=>{setName(e.target.value)}}/>
-            <label htmlFor="">Email: </label>
-            <input type="email" placeholder='Enter your email'
-            value={email}
-            onChange={(e)=>{setEmail(e.target.value)}}/>
-            <label htmlFor="">D-O-B: </label>
-            <input type="date" 
-            value={date}
-            onChange={(e)=>{setDate(e.target.value)}}/>
-            <label htmlFor="">Age: </label>
-            <input type="number" placeholder='Enter your Age'
-            value={age}
-            onChange={(e)=>{setAge(e.target.value)}}/>
-            <button >Submit</button>
-        </form>
+            <h5>Update the details and submit</h5>
+            <form onSubmit={edit_details}>
+                <div className="form-group">
+                    <label htmlFor="name">Name:</label>
+                    <input
+                        type="text"
+                        id="name"
+                        placeholder="Enter your name"
+                        value={name}
+                        onChange={(e) => setName(e.target.value)}
+                        required
+                    />
+                </div>
+                <div className="form-group">
+                    <label htmlFor="email">Email:</label>
+                    <input
+                        type="email"
+                        id="email"
+                        placeholder="Enter your email"
+                        value={email}
+                        onChange={(e) => setEmail(e.target.value)}
+                        required
+                    />
+                </div>
+                <div className="form-group">
+                    <label htmlFor="date">D-O-B:</label>
+                    <input
+                        type="date"
+                        id="date"
+                        value={date}
+                        onChange={(e) => setDate(e.target.value)}
+                        required
+                    />
+                </div>
+                <div className="form-group">
+                    <label htmlFor="age">Age:</label>
+                    <input
+                        type="number"
+                        id="age"
+                        placeholder="Enter your age"
+                        value={age}
+                        onChange={(e) => setAge(e.target.value)}
+                        required
+                    />
+                </div>
+                <button type="submit">Submit</button>
+            </form>
         </div>
-     );
-}
- 
+    );
+};
+
 export default EditSampleForm;
