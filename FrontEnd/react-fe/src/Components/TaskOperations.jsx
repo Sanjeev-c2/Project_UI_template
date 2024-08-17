@@ -69,14 +69,14 @@ const TaskOperations = () => {
             {selectedRole && (
                 <div className="operations">
                     {permissions.can_create && (
-                        <button>
-                            <Link to='/landingpage/sample-form'>Create</Link>
-                        </button>
+                        
+                            <Link to='/landingpage/sample-form'><button>Create</button></Link>
+                        
                     )}
                     {permissions.can_read && (
-                        <button>
-                            <Link to='/landingpage/view-form'>Read</Link>
-                        </button>
+                        
+                            <Link to='/landingpage/view-form'><button>Read</button></Link>
+                        
                     )}
                     {/* {permissions.can_update && (
                         <button>Update</button>

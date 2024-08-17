@@ -24,7 +24,7 @@ class SampleForm(models.Model):
     name = models.CharField(max_length=100)
     email = models.EmailField(max_length=200)
     date = models.DateField()
-    age = models.IntegerField(max_length=4)
+    age = models.IntegerField()
 
     def ___str___(self):
         return self.name

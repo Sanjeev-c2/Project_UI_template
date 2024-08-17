@@ -1,12 +1,12 @@
 import React from 'react';
-import ReactDOM from 'react-dom';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import './App.css';
 
 import 'bootstrap/dist/css/bootstrap.min.css';
 import LoginPage from './Components/Loginpage';
-import CustomSidenav from './Components/CustomSideNav'
+// import CustomSidenav from './Components/CustomSideNav'
 import LandingPage from './Components/LandingPage';
+import ProtectPage from './Components/ProtectPage';
 
 
 function App() {
@@ -16,7 +16,7 @@ function App() {
     <div className="App">
       <BrowserRouter>
       <Routes>
-        <Route path='/landingpage/*' element={<LandingPage/>}/>
+        <Route path="/landingpage/*" element={<ProtectPage Child={LandingPage}/>}/>
         <Route path='/' element={<LoginPage/>}/>
         {/* <Route path='/navbar' element={<CustomSidenav
         activeKey={activeKey}
