@@ -41,7 +41,7 @@ const UserPermissionForm = () => {
         };
 
         try {
-            await axios.post('http://localhost:8000/api/permissions/', data);
+            await axios.post('http://localhost:8000/api/assign_permissions/', data);
             alert('Permissions saved successfully!');
         } catch (error) {
             console.error('Error saving permissions:', error);

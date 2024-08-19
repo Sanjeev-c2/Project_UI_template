@@ -1,57 +1,67 @@
-.navbar .nav-link,
-.navbar .navbar-brand,
-.navbar , .profile {
-    color: rgb(255, 255, 255) !important;
-    text-decoration: none;
-}
-
-.navbar .nav-link:hover,
-.navbar .navbar-brand:hover {
-    text-decoration: none;
-}
-
-.navbar .dropdown-item:hover {
-    color: white !important;
-    background-color: #0044cc; 
-}
 .navbar {
-    position: relative;
-    top: 0;
-    left: 0;
-    width: 100%;
-    z-index: 100; 
-    background-color: #0044cc;
-}
-.container {
-    color: white;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
+    background-color: #003bb0; 
+    padding: 0.75rem 1.5rem;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); 
 }
 
-.logo {
-    flex: 1;
-    text-align: left;
-    width: max-content;
+.container {
+    max-width: 1200px; 
+    margin: 0 auto;
+    /* padding: 0 15px; */
 }
-.navbar .nav-link {
+
+.logo h4 {
+    margin: 0;
+    font-size: 24px;
+    font-weight: bold;
+    color: white;
+}
+
+.logo a {
+    text-decoration: none; 
+    color: white; 
+}
+
+.logo a:hover {
+    text-decoration: none; 
+    color: red; 
+}
+
+.navbar-dark .navbar-nav .nav-link {
+    color: white; 
+    font-weight: 500; 
     margin: 0 15px; 
 }
 
-.navbar .dropdown-item {
-    padding: 10px 20px; 
-    margin-bottom: 5px; 
+.navbar-dark .navbar-nav .nav-link:hover {
+    color: #ffcc00; 
+}
+
+.navbar-dark .dropdown-menu {
+    background-color: #0044cc; 
+    border: none; 
+}
+
+.navbar-dark .dropdown-item {
+    color: white; 
+    padding: 7px 20px; 
     text-decoration: none;
 }
 
-.navbar .dropdown-item:last-child {
-    margin-bottom: 0;
+.navbar-dark .dropdown-item:hover {
+    background-color: #ffcc00; 
+    color: #003399;
 }
 
-.nav-center {
-    flex: 2;
+.profile {
     display: flex;
-    justify-content: center;
+    align-items: center;
+    margin-right: 10px;
+}
+
+.custom-icon {
+    color: white;
+    font-size: 28px; 
 }
 
 .custom-dropdown .dropdown-toggle::after {
@@ -61,44 +71,79 @@
     position: absolute;
     margin: 10px 0 0 20px;
     width: 200px; 
+    background-color: #0044cc; 
+    border: none;
 }
-@media (max-width:900px) {
-    .navbar-collapse {
-        display: block; /* Show the collapsible section */
+.custom-dropdown p{
+    color: white;
+}
+
+.custom-dropdown .dropdown-item:hover {
+    background-color: #ffcc00;
+    color: #003399;
+}
+
+/* Responsive design */
+@media (max-width: 992px) {
+    .navbar {
+        padding: 0.5rem 1rem;
     }
 
-    .navbar-toggler {
-        display: block; /* Show toggle button */
+    .navbar-brand {
+        font-size: 20px;
     }
 
     .navbar-nav {
         display: flex;
-        flex-direction: row; /* Arrange dropdowns in a row */
-        flex-wrap: wrap; /* Allow wrapping if needed */
-        width: 100%; /* Full width */
+        flex-direction: row; 
+        flex-wrap: wrap;
+        width: 100%;
     }
 
-    .nav-center {
-        display: none; /* Hide center nav items on small screens */
+    .navbar-nav .nav-item {
+        position: relative;
+    }
+    .navbar-dark .dropdown-menu {
+        position: absolute;
+    }
+    .profile {
+        /* margin-top: 1rem; */
+        position: absolute;
+        right: 1rem;
+        top: 4rem;
+    }
+}
+
+@media (max-width: 768px) {
+    .navbar-collapse {
+        flex-direction: column;
     }
 
-    .dropdown-menu {
-        display: block; /* Ensure dropdown menu is visible */
-        position: static; /* Reset positioning */
-        width: auto; /* Auto width */
-        padding: 0; /* Remove default padding */
-        margin: 0; /* Remove default margin */
+    .navbar-nav {
+        margin-top: 1rem;
     }
 
-    .dropdown-item {
-        flex: 1; /* Allow items to grow and shrink as needed */
-        text-align: center; /* Center text in items */
-        margin: 0; /* Remove margin for row layout */
+    .profile {
+        position: absolute;
+        right: 1rem;
+        top: 4rem;
     }
-    
-    .profile{
-        position: fixed;
-        right: 10px;
-        top: 20px;
+
+    .navbar-brand h4 {
+        font-size: 18px;
+    }
+}
+
+@media (max-width: 576px) {
+    .navbar-brand h4 {
+        font-size: 16px;
+    }
+
+    .custom-icon {
+        font-size: 24px;
+    }
+
+    .navbar-nav {
+        text-align: center;
     }
 }

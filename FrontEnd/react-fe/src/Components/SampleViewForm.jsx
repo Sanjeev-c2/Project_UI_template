@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import '../Styles/SampleViewForm.css'; // Import the CSS file
+import '../Styles/SampleViewForm.css';
 import { useNavigate } from 'react-router-dom';
 
 const SampleViewForm = () => {
@@ -8,13 +8,13 @@ const SampleViewForm = () => {
     const [canUpdate, setCanUpdate] = useState(false);
     const [role, setRole] = useState('');
 
-    const navigate = useNavigate(); // Initialize navigate function
+    const navigate = useNavigate();
 
     useEffect(() => {
+        // Fetch form data
         axios.get("http://localhost:8000/api/sample-forms/")
             .then((res) => {
                 setData(res.data);
-                console.log(res.data);
             })
             .catch((err) => {
                 console.log(err);
@@ -29,12 +29,14 @@ const SampleViewForm = () => {
         }
 
         if (savedPermissions) {
-            setCanUpdate(savedPermissions.can_update);
+            // Check if the selected role has update permission
+            const hasUpdatePermission = savedPermissions.some(perm => perm.can_update);
+            setCanUpdate(hasUpdatePermission);
         }
     }, []);
 
     const editForm = (id) => {
-        navigate(`/landingpage/edit-form/${id}`); // Use template literals for path
+        navigate(`/landingpage/edit-form/${id}`);
     };
 
     return (
@@ -61,7 +63,7 @@ const SampleViewForm = () => {
                                 {canUpdate && (
                                     <button
                                         className="action-button"
-                                        onClick={() => editForm(item.id)} // Use arrow function to pass id
+                                        onClick={() => editForm(item.id)}
                                     >
                                         Edit
                                     </button>

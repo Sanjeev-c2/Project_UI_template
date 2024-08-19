@@ -1,5 +1,5 @@
 import React from 'react';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import ManageAccountsIcon from '@mui/icons-material/ManageAccounts';
 import '../Styles/Navbar.css';
 
@@ -21,7 +21,7 @@ const Navbar1 = () => {
         <Navbar variant="dark" expand="lg" className="navbar">
             <Container fluid className="container">
                 <Navbar.Brand className="logo">
-                    <h4>Code<span style={{ color: 'red' }}>n</span>trix</h4>
+                    <h4><Link to='/landingpage'>Code<span style={{ color: 'red' }}>n</span>trix</Link></h4>
                 </Navbar.Brand>
                 <Navbar.Toggle aria-controls="navbar-dark-example" />
                 <Navbar.Collapse id="navbar-dark-example">

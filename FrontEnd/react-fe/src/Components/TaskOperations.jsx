@@ -1,16 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
-import '../Styles/TaskOperations.css'
+import '../Styles/TaskOperations.css';
 
 const TaskOperations = () => {
-    const [rolesPermissions, setRolesPermissions] = useState([]);
-    const [selectedRole, setSelectedRole] = useState('');  // Store the selected role
-    const [permissions, setPermissions] = useState({
-        can_create: false,
-        can_read: false,
-        can_update: false,
-    });
+    const [roles, setRoles] = useState([]);
+    const [permissions, setPermissions] = useState([]);
+    const [selectedRole, setSelectedRole] = useState('');
 
     useEffect(() => {
         // Fetch user details from local storage
@@ -20,10 +16,10 @@ const TaskOperations = () => {
             const userId = storedUser.user.id; // Assuming `id` is the user ID
 
             // Fetch the user's roles and permissions from the backend
-            axios.get(`http://localhost:8000/api/permissions/${userId}`)
+            axios.get(`http://localhost:8000/api/roles-and-permissions/${userId}/`)
                 .then(response => {
-                    setRolesPermissions(response.data);  // Set the user roles and permissions
-                    console.log(response.data);
+                    setRoles(response.data.roles);
+                    setPermissions(response.data.permissions);
                 })
                 .catch(error => {
                     console.error('Error fetching data:', error);
@@ -36,19 +32,19 @@ const TaskOperations = () => {
         const selectedRole = e.target.value;
         setSelectedRole(selectedRole);
 
-        // Find the selected role's permissions
-        const selectedRolePermissions = rolesPermissions.find(
-            rolePermission => rolePermission.role === selectedRole
+        // Update permissions based on the selected role and filter for 'SampleForm'
+        const rolePermissions = permissions.filter(
+            perm => perm.role.name === selectedRole && 
+                    perm.permission.name.includes('sample form')
         );
 
-        // Update permissions based on the selected role
-        if (selectedRolePermissions) {
-            setPermissions(selectedRolePermissions.permissions);
-            // Save the selected role and permissions to localStorage
-            localStorage.setItem('selectedRole', selectedRole);
-            localStorage.setItem('permissions', JSON.stringify(selectedRolePermissions.permissions));
-        }
+        // Save the selected role and permissions to localStorage
+        localStorage.setItem('selectedRole', selectedRole);
+        localStorage.setItem('permissions', JSON.stringify(rolePermissions));
     };
+
+    // Find the permissions for the selected role
+    const selectedRolePermissions = JSON.parse(localStorage.getItem('permissions')) || [];
 
     return (
         <div className="task-operations">
@@ -58,27 +54,23 @@ const TaskOperations = () => {
             <label htmlFor="role-select"><strong>Select Role:</strong></label>
             <select id="role-select" value={selectedRole} onChange={handleRoleChange}>
                 <option value="">Select a role</option>
-                {rolesPermissions.map((rolePermission, index) => (
-                    <option key={index} value={rolePermission.role}>
-                        {rolePermission.role}
+                {roles.map(role => (
+                    <option key={role.id} value={role.name}>
+                        {role.name}
                     </option>
                 ))}
             </select>
 
             {/* Conditionally render operations based on selected role's permissions */}
-            {selectedRole && (
+            {selectedRole && selectedRolePermissions.length > 0 && (
                 <div className="operations">
-                    {permissions.can_create && (
-                        
-                            <Link to='/landingpage/sample-form'><button>Create</button></Link>
-                        
+                    {selectedRolePermissions.some(perm => perm.can_create) && (
+                        <Link to='/landingpage/sample-form'><button>Create</button></Link>
                     )}
-                    {permissions.can_read && (
-                        
-                            <Link to='/landingpage/view-form'><button>Read</button></Link>
-                        
+                    {selectedRolePermissions.some(perm => perm.can_read) && (
+                        <Link to='/landingpage/view-form'><button>Read</button></Link>
                     )}
-                    {/* {permissions.can_update && (
+                    {/* {selectedRolePermissions.some(perm => perm.can_update) && (
                         <button>Update</button>
                     )} */}
                 </div>

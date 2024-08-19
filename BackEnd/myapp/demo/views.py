@@ -2,9 +2,9 @@ from rest_framework.decorators import api_view
 from django.contrib.auth import authenticate, login as auth_login
 from rest_framework.response import Response
 from rest_framework import status
-from .models import User, UserPermission, SampleForm
-from .serializers import UserSerializer, UserPermissionSerializer, SampleFormSerializer
-
+from django.contrib.auth.models import User, Group, Permission
+from .models import UserRolePermission, SampleForm
+from .serializers import UserSerializer, UserRolePermissionSerializer, GroupSerializer, PermissionSerializer, SampleFormSerializer
 
 @api_view(['POST'])
 def signup(request):
@@ -17,7 +17,6 @@ def signup(request):
     user = User.objects.create_user(username=username, password=password)  # Handles password hashing
     serializer = UserSerializer(user)
     return Response(serializer.data, status=status.HTTP_201_CREATED)
-    
 
 @api_view(['POST'])
 def login(request):
@@ -29,62 +28,75 @@ def login(request):
     if user is not None:
         auth_login(request._request, user)  # Log in the user
         serializer = UserSerializer(user)
-        user_permissions = UserPermission.objects.filter(user=user)
-        permission_data = UserPermissionSerializer(user_permissions, many=True).data
+        
+        # Fetch role-based permissions for the user
+        user_role_permissions = UserRolePermission.objects.filter(user=user)
+        permission_data = UserRolePermissionSerializer(user_role_permissions, many=True).data
+        
         return Response({
             'user': serializer.data,
             'permissions': permission_data
         }, status=status.HTTP_200_OK)
     else:
         return Response({"error": "Invalid credentials"}, status=status.HTTP_400_BAD_REQUEST)
-    
 
 @api_view(['POST'])
-def save_permissions(request):
-    serializer = UserPermissionSerializer(data=request.data)
-    if serializer.is_valid():
-        user = serializer.validated_data['user']
-        role = serializer.validated_data['role']
-        can_create = serializer.validated_data['can_create']
-        can_read = serializer.validated_data['can_read']
-        can_update = serializer.validated_data['can_update']
+def assign_permissions(request):
+    role_name = request.data.get('role')
+    user_id = request.data.get('user')
+    can_create = request.data.get('can_create', False)
+    can_read = request.data.get('can_read', False)
+    can_update = request.data.get('can_update', False)
 
-        # Update or create the UserPermission entry
-        user_permission, created = UserPermission.objects.update_or_create(
+    # Find or create the role (group)
+    role, created = Group.objects.get_or_create(name=role_name)
+
+    # Find user
+    user = User.objects.get(id=user_id)
+
+    # Add user to the role (group)
+    user.groups.add(role)
+
+    # Find or create permissions
+    permissions = Permission.objects.all()  # Adjust this based on your needs
+
+    # Assign permissions
+    for perm in permissions:
+        UserRolePermission.objects.update_or_create(
             user=user,
             role=role,
+            permission=perm,
             defaults={
                 'can_create': can_create,
                 'can_read': can_read,
                 'can_update': can_update,
             }
         )
-        return Response(serializer.data, status=status.HTTP_200_OK)
-    else:
-        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-    
+
+    return Response({'status': 'Permissions assigned'}, status=status.HTTP_200_OK)
 
 @api_view(['GET'])
 def get_user_roles_and_permissions(request, user_id):
     try:
-        user_permissions = UserPermission.objects.filter(user_id=user_id)
-        
-        # Prepare a list of roles and corresponding permissions
-        roles_permissions = []
-        for user_permission in user_permissions:
-            roles_permissions.append({
-                'role': user_permission.role,  # Fetch the role
-                'permissions': {
-                    'can_create': user_permission.can_create,
-                    'can_read': user_permission.can_read,
-                    'can_update': user_permission.can_update,
-                }
-            })
-        
-        return Response(roles_permissions)
-    except UserPermission.DoesNotExist:
-        return Response({'error': 'Permissions not found'}, status=404)
-    
+        user = User.objects.get(id=user_id)
+    except User.DoesNotExist:
+        return Response({'error': 'User not found'}, status=status.HTTP_404_NOT_FOUND)
+
+    # Fetch user's groups (roles)
+    user_groups = user.groups.all()
+
+    # Serialize roles (groups)
+    group_serializer = GroupSerializer(user_groups, many=True)
+
+    # Fetch all permissions associated with the user's roles
+    user_role_permissions = UserRolePermission.objects.filter(user=user)
+    permission_serializer = UserRolePermissionSerializer(user_role_permissions, many=True)
+
+    return Response({
+        'roles': group_serializer.data,
+        'permissions': permission_serializer.data
+    }, status=status.HTTP_200_OK)
+
 
 @api_view(['POST'])
 def sample_form_create(request):
@@ -101,7 +113,6 @@ def sample_form_list(request):
     sample_forms = SampleForm.objects.all()
     serializer = SampleFormSerializer(sample_forms, many=True)
     return Response(serializer.data)
-
 
 @api_view(['GET'])
 def sample_form_detail(request, pk):
